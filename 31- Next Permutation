@@ -1,0 +1,38 @@
+class Solution {
+    public void nextPermutation(int[] nums) {
+        if (nums == null || nums.length < 2)
+            return;
+
+        int changePos = nums.length - 1;
+        while (changePos > 1 && nums[changePos] <= nums[changePos - 1]) {
+            changePos--;
+        }
+        if (nums[changePos - 1] >= nums[changePos]) {
+            
+            revert(nums, 0, nums.length - 1);
+        } else {
+            
+            int changePos2 = nums.length - 1;
+            while (nums[changePos - 1] >= nums[changePos2]) {
+                changePos2--;
+            }
+
+            int tmp = nums[changePos - 1];
+            nums[changePos - 1] = nums[changePos2];
+            nums[changePos2] = tmp;
+
+            revert(nums, changePos, nums.length - 1);
+        }
+
+    }
+
+    private void revert(int[] nums, int start, int end) {
+        while (start < end) {
+            int tmp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = tmp;
+            start++;
+            end--;
+        }
+    }
+}
